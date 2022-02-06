@@ -3,4 +3,4 @@ project(5d C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(5d main.c)
+add_executable(5d main.c libs/data_structures/matrix/matrix.h libs/data_structures/matrix/matrix.c)
