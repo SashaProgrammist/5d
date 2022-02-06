@@ -7,6 +7,7 @@
 
 #include <malloc.h>
 #include <stdio.h>
+#include <memory.h>
 
 typedef struct matrix {
     int **values; // элементы матрицы
@@ -41,3 +42,9 @@ void inputMatrices(matrix *ms, int nMatrices);
 void outputMatrix(matrix m);
 
 void outputMatrices(matrix *ms, int nMatrices);
+
+// swap
+
+void swapRows(matrix m, int i1, int i2);
+
+void swapColumns(matrix m, int j1, int j2);
