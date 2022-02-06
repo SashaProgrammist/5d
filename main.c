@@ -6,13 +6,9 @@ int main() {
     matrix m = getMemMatrix(3, 3);
     inputMatrix(m);
 
-    printf("isSquareMatrix %d\n", isSquareMatrix(m));
+    transposeSquareMatrix(m);
 
-    printf("isEMatrix %d\n", isEMatrix(m));
-
-    printf("twoMatricesEqual %d\n", twoMatricesEqual(m, m));
-
-    printf("isSymmetricMatrix %d\n", isSymmetricMatrix(m));
+    outputMatrix(m);
 
     return 0;
 }

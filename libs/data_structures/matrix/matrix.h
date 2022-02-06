@@ -71,3 +71,7 @@ bool twoMatricesEqual(matrix m1, matrix m2);
 bool isEMatrix(matrix m);
 
 bool isSymmetricMatrix(matrix m);
+
+// transformations
+
+void transposeSquareMatrix(matrix m);

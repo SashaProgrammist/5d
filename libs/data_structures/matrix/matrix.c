@@ -195,3 +195,15 @@ bool isSymmetricMatrix(matrix m){
 
     return true;
 }
+
+// transformations
+
+void transposeSquareMatrix(matrix m){
+    if (!isSquareMatrix(m))
+        return;
+    int n = m.nRows;
+
+    for (int i = 0; i < n; ++i)
+        for (int j = i + 1; j < n; ++j)
+            swap(m.values[i] + j, m.values[j] + i, sizeof(int));
+}
