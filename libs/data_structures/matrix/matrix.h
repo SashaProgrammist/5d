@@ -8,6 +8,7 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <memory.h>
+#include <stdbool.h>
 
 typedef struct matrix {
     int **values; // элементы матрицы
@@ -60,3 +61,13 @@ void insertionSortColsMatrixByColCriteria(matrix m,
 // get
 
 int *getColumn(matrix m, int j);
+
+// bool
+
+bool isSquareMatrix(matrix m);
+
+bool twoMatricesEqual(matrix m1, matrix m2);
+
+bool isEMatrix(matrix m);
+
+bool isSymmetricMatrix(matrix m);

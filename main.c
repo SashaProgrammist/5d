@@ -2,24 +2,17 @@
 
 #include "libs/data_structures/matrix/matrix.h"
 
-int sum(int *arr, int n){
-    int res = 0;
-    for (int i = 0; i < n; ++i)
-        res += arr[i];
-    return res;
-}
-
 int main() {
-    matrix m = getMemMatrix(3, 2);
-
+    matrix m = getMemMatrix(3, 3);
     inputMatrix(m);
 
-    printf("\n");
-    insertionSortRowsMatrixByRowCriteria(m, sum);
-    outputMatrix(m);
-    printf("\n");
-    insertionSortColsMatrixByColCriteria(m, sum);
-    outputMatrix(m);
+    printf("isSquareMatrix %d\n", isSquareMatrix(m));
+
+    printf("isEMatrix %d\n", isEMatrix(m));
+
+    printf("twoMatricesEqual %d\n", twoMatricesEqual(m, m));
+
+    printf("isSymmetricMatrix %d\n", isSymmetricMatrix(m));
 
     return 0;
 }

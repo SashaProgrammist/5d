@@ -151,3 +151,47 @@ int *getColumn(matrix m, int j) {
 
     return result;
 }
+
+// bool
+
+bool isSquareMatrix(matrix m){
+    return m.nRows == m.nCols;
+}
+
+bool twoMatricesEqual(matrix m1, matrix m2){
+    if (m1.nRows != m2.nRows || m1.nCols != m2.nCols)
+        return false;
+
+    for (int i = 0; i < m1.nRows; ++i)
+        for (int j = 0; j < m1.nCols; ++j)
+            if (m1.values[i][j] != m2.values[i][j])
+                return false;
+
+    return true;
+}
+
+bool isEMatrix(matrix m){
+    if (!isSquareMatrix(m))
+        return false;
+    int n = m.nRows;
+
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < n; ++j)
+            if (m.values[i][j] != (i == j))
+                return false;
+
+    return true;
+}
+
+bool isSymmetricMatrix(matrix m){
+    if (!isSquareMatrix(m))
+        return false;
+    int n = m.nRows;
+
+    for (int i = 0; i < n; ++i)
+        for (int j = i + 1; j < n; ++j)
+            if (m.values[i][j] != m.values[j][i])
+                return false;
+
+    return true;
+}
