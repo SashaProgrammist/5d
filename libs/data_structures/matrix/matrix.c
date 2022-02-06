@@ -49,9 +49,12 @@ void freeMemMatrices(matrix *ms, int nMatrices) {
 // input / output
 
 void inputMatrix(matrix m) {
-    for (int i = 0; i < m.nRows; ++i)
-        for (int j = 0; j < m.nCols; ++j)
-            scanf("%d", m.values[i] + j);
+    counter c = initC(m);
+
+    while (!c.isFinished){
+        int *current = getLinkC(&c);
+        scanf("%d", current);
+    }
 }
 
 void inputMatrices(matrix *ms, int nMatrices) {
@@ -72,6 +75,36 @@ void outputMatrices(matrix *ms, int nMatrices) {
         outputMatrix(ms[i]);
         printf("\n");
     }
+}
+
+// create
+
+matrix createMatrixFromArray(const int *values,
+                             int nRows, int nCols){
+    matrix m = getMemMatrix(nRows, nCols);
+    counter c = initC(m);
+    int i = 0;
+
+    while (!c.isFinished)
+        setValueC(&c, values[i++]);
+
+    return m;
+}
+
+matrix *createArrayOfMatrixFromArray(const int *values,
+                                     int nMatrices,
+                                     int nRows, int nCols){
+    matrix *ms = getMemArrayOfMatrices(nMatrices, nRows, nCols );
+    int j = 0;
+
+    for (int i = 0; i < nMatrices; ++i) {
+        counter c = initC(ms[i]);
+
+        while (!c.isFinished)
+            setValueC(&c, values[j++]);
+    }
+
+    return ms;
 }
 
 // swap
@@ -152,25 +185,78 @@ int *getColumn(matrix m, int j) {
     return result;
 }
 
+int getValue(matrix m, position p) {
+    return m.values[p.rowIndex][p.colIndex];
+}
+
+int *getLink(matrix m, position p){
+    return m.values[p.rowIndex] + p.colIndex;
+}
+
+position getMinValuePos(matrix m) {
+    position result = (position) {0, 0};
+    int min = getValue(m, result);
+
+    counter c = initC(m);
+    while (!c.isFinished){
+        position currentP = getPositionC(&c);
+        int currentV = getValue(m, currentP);
+
+        if (currentV < min){
+            result = currentP;
+            min = currentV;
+        }
+    }
+
+    return result;
+}
+
+position getMaxValuePos(matrix m) {
+    position result = (position) {0, 0};
+    int max = getValue(m, result);
+
+    counter c = initC(m);
+    while (!c.isFinished){
+        position currentP = getPositionC(&c);
+        int currentV = getValue(m, currentP);
+
+        if (currentV > max){
+            result = currentP;
+            max = currentV;
+        }
+    }
+
+    return result;
+}
+
+// set
+
+void setValue(matrix m, position p, int value) {
+    m.values[p.rowIndex][p.colIndex] = value;
+}
+
 // bool
 
-bool isSquareMatrix(matrix m){
+bool isSquareMatrix(matrix m) {
     return m.nRows == m.nCols;
 }
 
-bool twoMatricesEqual(matrix m1, matrix m2){
+bool twoMatricesEqual(matrix m1, matrix m2) {
     if (m1.nRows != m2.nRows || m1.nCols != m2.nCols)
         return false;
 
-    for (int i = 0; i < m1.nRows; ++i)
-        for (int j = 0; j < m1.nCols; ++j)
-            if (m1.values[i][j] != m2.values[i][j])
-                return false;
+    counter c = initC(m1);
+    while (!c.isFinished){
+        position p = getPositionC(&c);
+
+        if (getValue(m1, p) != getValue(m2, p))
+            return false;
+    }
 
     return true;
 }
 
-bool isEMatrix(matrix m){
+bool isEMatrix(matrix m) {
     if (!isSquareMatrix(m))
         return false;
     int n = m.nRows;
@@ -183,7 +269,7 @@ bool isEMatrix(matrix m){
     return true;
 }
 
-bool isSymmetricMatrix(matrix m){
+bool isSymmetricMatrix(matrix m) {
     if (!isSquareMatrix(m))
         return false;
     int n = m.nRows;
@@ -198,7 +284,7 @@ bool isSymmetricMatrix(matrix m){
 
 // transformations
 
-void transposeSquareMatrix(matrix m){
+void transposeSquareMatrix(matrix m) {
     if (!isSquareMatrix(m))
         return;
     int n = m.nRows;
@@ -206,4 +292,49 @@ void transposeSquareMatrix(matrix m){
     for (int i = 0; i < n; ++i)
         for (int j = i + 1; j < n; ++j)
             swap(m.values[i] + j, m.values[j] + i, sizeof(int));
+}
+
+// counter
+
+counter initC(matrix m) {
+    return (counter) {m, 0, false};
+}
+
+position getPositionC(counter *c) {
+    if (c->isFinished) return (position) {-1, -1};
+
+    position result = (position) {
+            c->count / c->m.nCols,
+            c->count % c->m.nCols
+    };
+
+    muvC(c);
+
+    return result;
+}
+
+int getValueC(counter *c) {
+    position p = getPositionC(c);
+
+    return getValue(c->m, p);
+}
+
+int *getLinkC(counter *c){
+    position p = getPositionC(c);
+
+    return getLink(c->m, p);
+}
+
+void setValueC(counter *c, int value) {
+    position p = getPositionC(c);
+
+    setValue(c->m, p, value);
+}
+
+void muvC(counter *c) {
+    if (c->isFinished) return;
+
+    (c->count)++;
+    if (c->count / c->m.nCols >= c->m.nRows)
+        c->isFinished = true;
 }

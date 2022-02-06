@@ -21,6 +21,12 @@ typedef struct position {
     int colIndex;
 } position;
 
+typedef struct counter{
+    matrix m;
+    int count;
+    bool isFinished;
+} counter;
+
 // memory
 
 matrix getMemMatrix(int nRows, int nCols);
@@ -44,6 +50,15 @@ void outputMatrix(matrix m);
 
 void outputMatrices(matrix *ms, int nMatrices);
 
+// create
+
+matrix createMatrixFromArray(const int *values,
+                             int nRows, int nCols);
+
+matrix *createArrayOfMatrixFromArray(const int *values,
+                                     int nMatrices,
+                                     int nRows, int nCols);
+
 // swap
 
 void swapRows(matrix m, int i1, int i2);
@@ -62,6 +77,18 @@ void insertionSortColsMatrixByColCriteria(matrix m,
 
 int *getColumn(matrix m, int j);
 
+int getValue(matrix m, position p);
+
+int *getLink(matrix m, position p);
+
+position getMinValuePos(matrix m);
+
+position getMaxValuePos(matrix m);
+
+// set
+
+void setValue(matrix m, position p, int value) ;
+
 // bool
 
 bool isSquareMatrix(matrix m);
@@ -75,3 +102,17 @@ bool isSymmetricMatrix(matrix m);
 // transformations
 
 void transposeSquareMatrix(matrix m);
+
+// counter
+
+counter initC(matrix m);
+
+int getValueC(counter *c);
+
+int *getLinkC(counter *c);
+
+position getPositionC(counter *c);
+
+void setValueC(counter *c, int value);
+
+void muvC(counter *c);
