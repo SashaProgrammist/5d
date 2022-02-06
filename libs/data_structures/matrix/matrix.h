@@ -6,6 +6,7 @@
 #define INC_5D_MATRIX_H
 
 #include <malloc.h>
+#include <stdio.h>
 
 typedef struct matrix {
     int **values; // элементы матрицы
@@ -18,6 +19,8 @@ typedef struct position {
     int colIndex;
 } position;
 
+// memory
+
 matrix getMemMatrix(int nRows, int nCols);
 
 matrix *getMemArrayOfMatrices(int nMatrices,
@@ -28,3 +31,13 @@ void freeMemMatrix(matrix m);
 void freeMemMatrices(matrix *ms, int nMatrices);
 
 #endif //INC_5D_MATRIX_H
+
+// input / output
+
+void inputMatrix(matrix m);
+
+void inputMatrices(matrix *ms, int nMatrices);
+
+void outputMatrix(matrix m);
+
+void outputMatrices(matrix *ms, int nMatrices);
