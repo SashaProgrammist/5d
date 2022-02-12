@@ -297,11 +297,11 @@ int binSearchElement(int array[], size_t length, int element) {
 	return -1;
 }
 
-int isUniqueArray(int array[], size_t length) {
-	for (size_t i = 0; i < length; i++) {
-		if (linearSearchElement(array + i + 1, length - i - 1, array[i]) == -1)
-			return false;
-	}
+bool isUnique(long long int *array, size_t size) {
+	for (size_t i = 0; i < size; i++)
+        for (int j = i + 1; j < size; ++j)
+            if (array[i] == array[j])
+                return false;
 
 	return true;
 }
@@ -444,8 +444,8 @@ int arraySplit(int *array, size_t length, int condition(int),
 	return 0;
 }
 
-int summ(int *array, size_t length) {
-	int result = 0;
+long long int getSum(int *array, size_t length) {
+	long long result = 0;
 
 	for (size_t i = 0; i < length; i++)
 		result += array[i];

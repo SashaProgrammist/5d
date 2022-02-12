@@ -311,14 +311,6 @@ void transposeSquareMatrix(matrix m) {
             swap(m.values[i] + j, m.values[j] + i, sizeof(int));
 }
 
-void getSquareOfMatrixIfSymmetric(matrix *m) {
-    if (isSymmetricMatrix(*m)){
-        matrix result = getSquareOfMatrix(*m);
-        freeMemMatrix(*m);
-        *m = result;
-    }
-}
-
 // counter
 
 counter initC(matrix m) {

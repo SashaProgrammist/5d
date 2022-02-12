@@ -1,5 +1,12 @@
 #include "../libs/data_structures/matrix/matrix.h"
-#include "../libs/algorithms/oneDimArray/oneDimArray.h"
+
+void getSquareOfMatrixIfSymmetric(matrix *m) {
+    if (isSymmetricMatrix(*m)){
+        matrix result = getSquareOfMatrix(*m);
+        freeMemMatrix(*m);
+        *m = result;
+    }
+}
 
 void task4() {
     matrix m = fCons_inputSquareMatrix();
@@ -10,5 +17,3 @@ void task4() {
 
     freeMemMatrix(m);
 }
-
-

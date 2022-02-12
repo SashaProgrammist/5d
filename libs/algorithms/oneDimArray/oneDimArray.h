@@ -222,7 +222,7 @@ int getMax(int *array, int size);
 /// состоит ли массив array размера length
 /// из уникальных элиментов 
 /// </returns>
-int isUniqueArray(int array[], size_t length);
+bool isUnique(long long int *array, size_t size);
 
 /// <param name="array"></param>
 /// <param name="length"></param>
@@ -317,7 +317,7 @@ int any(int *array, size_t length, int condition(int));
 
 int all(int *array, size_t length, int condition(int));
 
-int summ(int *array, size_t length);
+long long int getSum(int *array, size_t length);
 
 int binSearchElement(int array[], size_t length, int element);
 

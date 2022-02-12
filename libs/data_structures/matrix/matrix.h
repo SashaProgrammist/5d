@@ -105,8 +105,6 @@ bool isSymmetricMatrix(matrix m);
 
 void transposeSquareMatrix(matrix m);
 
-void getSquareOfMatrixIfSymmetric(matrix *m);
-
 // counter
 
 counter initC(matrix m);
