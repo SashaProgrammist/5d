@@ -3,4 +3,10 @@ project(5d C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(5d main.c libs/data_structures/matrix/matrix.h libs/data_structures/matrix/matrix.c)
+add_executable(5d
+        main.c
+        libs/data_structures/matrix/matrix.h libs/data_structures/matrix/matrix.c
+        tasks/task1.c
+        libs/algorithms/oneDimArray/oneDimArray.c libs/algorithms/oneDimArray/oneDimArray.h
+        libs/algorithms/heapFunctions/heapFunctions.c libs/algorithms/heapFunctions/heapFunctions.h
+)

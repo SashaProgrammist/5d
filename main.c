@@ -1,14 +1,9 @@
-#include <stdio.h>
-
 #include "libs/data_structures/matrix/matrix.h"
 
+void task1();
+
 int main() {
-    matrix m = getMemMatrix(3, 3);
-    inputMatrix(m);
-
-    transposeSquareMatrix(m);
-
-    outputMatrix(m);
+    task1();
 
     return 0;
 }

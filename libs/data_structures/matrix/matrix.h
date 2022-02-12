@@ -38,8 +38,6 @@ void freeMemMatrix(matrix m);
 
 void freeMemMatrices(matrix *ms, int nMatrices);
 
-#endif //INC_5D_MATRIX_H
-
 // input / output
 
 void inputMatrix(matrix m);
@@ -116,3 +114,9 @@ position getPositionC(counter *c);
 void setValueC(counter *c, int value);
 
 void muvC(counter *c);
+
+// from console
+
+matrix fCons_inputSquareMatrix();
+
+#endif //INC_5D_MATRIX_H

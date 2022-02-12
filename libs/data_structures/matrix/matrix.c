@@ -3,17 +3,7 @@
 //
 
 #include "matrix.h"
-
-void swap(void *a, void *b, size_t size) {
-    char *arg1 = (char *) a;
-    char *arg2 = (char *) b;
-
-    for (size_t i = 0; i < size; i++) {
-        char t = arg1[i];
-        arg1[i] = arg2[i];
-        arg2[i] = t;
-    }
-}
+#include "../../algorithms/heapFunctions/heapFunctions.h"
 
 // memory
 
@@ -51,10 +41,8 @@ void freeMemMatrices(matrix *ms, int nMatrices) {
 void inputMatrix(matrix m) {
     counter c = initC(m);
 
-    while (!c.isFinished){
-        int *current = getLinkC(&c);
-        scanf("%d", current);
-    }
+    while (!c.isFinished)
+        scanf("%d", getLinkC(&c));
 }
 
 void inputMatrices(matrix *ms, int nMatrices) {
@@ -337,4 +325,17 @@ void muvC(counter *c) {
     (c->count)++;
     if (c->count / c->m.nCols >= c->m.nRows)
         c->isFinished = true;
+}
+
+// from console
+
+matrix fCons_inputSquareMatrix(){
+    int n;
+    scanf("%d", &n);
+
+    matrix m = getMemMatrix(n, n);
+
+    inputMatrix(m);
+
+    return m;
 }
