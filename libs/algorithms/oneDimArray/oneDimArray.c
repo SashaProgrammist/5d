@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include "oneDimArray.h"
-#include "../heapFunctions/heapFunctions.h"
 
 void inputArray(int *array, size_t length) {
 	for (size_t i = 0; i < length; i++)
@@ -231,6 +230,12 @@ size_t getLastIndexMin(int array[], size_t length) {
 	return getIndexBestInCondition(array, length, _isLastIndexMin);
 }
 
+int getMin(int *array, int size){
+    int iMin = getFirstIndexMin(array, size);
+
+    return array[iMin];
+}
+
 static int _isFirstIndexMax(int a, int b) {
 	return a < b;
 }
@@ -245,6 +250,12 @@ static int _isLastIndexMax(int a, int b) {
 
 size_t getLastIndexMax(int array[], size_t length) {
 	return getIndexBestInCondition(array, length, _isLastIndexMax);
+}
+
+int getMax(int *array, int size){
+    int iMin = getFirstIndexMax(array, size);
+
+    return array[iMin];
 }
 
 size_t getIndexBestInCondition(int array[], size_t length, int condition(int, int)) {

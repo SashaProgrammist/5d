@@ -119,4 +119,6 @@ void muvC(counter *c);
 
 matrix fCons_inputSquareMatrix();
 
+matrix fCons_inputMatrix();
+
 #endif //INC_5D_MATRIX_H

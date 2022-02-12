@@ -339,3 +339,14 @@ matrix fCons_inputSquareMatrix(){
 
     return m;
 }
+
+matrix fCons_inputMatrix(){
+    int n_r, n_c;
+    scanf("%d %d", &n_r, &n_c);
+
+    matrix m = getMemMatrix(n_r, n_c);
+
+    inputMatrix(m);
+
+    return m;
+}

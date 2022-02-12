@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+#include "../heapFunctions/heapFunctions.h"
 
 /// <summary>
 /// производит ввод массива array размера length
@@ -195,6 +196,8 @@ size_t getFirstIndexMin(int array[], size_t length);
 /// </returns>
 size_t getLastIndexMin(int array[], size_t length);
 
+int getMin(int *array, int size);
+
 /// <param name="array"></param>
 /// <param name="length"></param>
 /// <returns>
@@ -210,6 +213,8 @@ size_t getFirstIndexMax(int array[], size_t length);
 /// из массива array размера length
 /// </returns>
 size_t getLastIndexMax(int array[], size_t length);
+
+int getMax(int *array, int size);
 
 /// <param name="array"></param>
 /// <param name="length"></param>
