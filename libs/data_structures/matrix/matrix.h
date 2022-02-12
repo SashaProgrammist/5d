@@ -83,6 +83,10 @@ position getMinValuePos(matrix m);
 
 position getMaxValuePos(matrix m);
 
+matrix getSquareOfMatrix(matrix m);
+
+matrix getMulMatrices(matrix m1, matrix m2);
+
 // set
 
 void setValue(matrix m, position p, int value) ;
@@ -100,6 +104,8 @@ bool isSymmetricMatrix(matrix m);
 // transformations
 
 void transposeSquareMatrix(matrix m);
+
+void getSquareOfMatrixIfSymmetric(matrix *m);
 
 // counter
 

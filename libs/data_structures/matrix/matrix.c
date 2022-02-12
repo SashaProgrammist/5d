@@ -68,7 +68,7 @@ void outputMatrices(matrix *ms, int nMatrices) {
 // create
 
 matrix createMatrixFromArray(const int *values,
-                             int nRows, int nCols){
+                             int nRows, int nCols) {
     matrix m = getMemMatrix(nRows, nCols);
     counter c = initC(m);
     int i = 0;
@@ -81,8 +81,8 @@ matrix createMatrixFromArray(const int *values,
 
 matrix *createArrayOfMatrixFromArray(const int *values,
                                      int nMatrices,
-                                     int nRows, int nCols){
-    matrix *ms = getMemArrayOfMatrices(nMatrices, nRows, nCols );
+                                     int nRows, int nCols) {
+    matrix *ms = getMemArrayOfMatrices(nMatrices, nRows, nCols);
     int j = 0;
 
     for (int i = 0; i < nMatrices; ++i) {
@@ -177,7 +177,7 @@ int getValue(matrix m, position p) {
     return m.values[p.rowIndex][p.colIndex];
 }
 
-int *getLink(matrix m, position p){
+int *getLink(matrix m, position p) {
     return m.values[p.rowIndex] + p.colIndex;
 }
 
@@ -186,11 +186,11 @@ position getMinValuePos(matrix m) {
     int min = getValue(m, result);
 
     counter c = initC(m);
-    while (!c.isFinished){
+    while (!c.isFinished) {
         position currentP = getPositionC(&c);
         int currentV = getValue(m, currentP);
 
-        if (currentV < min){
+        if (currentV < min) {
             result = currentP;
             min = currentV;
         }
@@ -204,11 +204,11 @@ position getMaxValuePos(matrix m) {
     int max = getValue(m, result);
 
     counter c = initC(m);
-    while (!c.isFinished){
+    while (!c.isFinished) {
         position currentP = getPositionC(&c);
         int currentV = getValue(m, currentP);
 
-        if (currentV > max){
+        if (currentV > max) {
             result = currentP;
             max = currentV;
         }
@@ -216,6 +216,35 @@ position getMaxValuePos(matrix m) {
 
     return result;
 }
+
+matrix getSquareOfMatrix(matrix m){
+    return getMulMatrices(m, m);
+}
+
+matrix getMulMatrices(matrix m1, matrix m2) {
+    if (m1.nCols != m2.nRows) {
+        fprintf(stderr, "impossible action");
+        exit(1);
+    }
+
+    int n = m1.nCols;
+    matrix result = getMemMatrix(m1.nRows, m2.nCols);
+    counter c = initC(result);
+
+    while (!c.isFinished) {
+        position currentPosition = getPositionC(&c);
+        int currentSum = 0;
+
+        for (int i = 0; i < n; ++i)
+            currentSum += getValue(m1, (position) {currentPosition.rowIndex,i}) *
+                          getValue(m2, (position) {i,currentPosition.colIndex});
+
+        setValue(result, currentPosition, currentSum);
+    }
+
+    return result;
+}
+
 
 // set
 
@@ -234,7 +263,7 @@ bool twoMatricesEqual(matrix m1, matrix m2) {
         return false;
 
     counter c = initC(m1);
-    while (!c.isFinished){
+    while (!c.isFinished) {
         position p = getPositionC(&c);
 
         if (getValue(m1, p) != getValue(m2, p))
@@ -282,6 +311,14 @@ void transposeSquareMatrix(matrix m) {
             swap(m.values[i] + j, m.values[j] + i, sizeof(int));
 }
 
+void getSquareOfMatrixIfSymmetric(matrix *m) {
+    if (isSymmetricMatrix(*m)){
+        matrix result = getSquareOfMatrix(*m);
+        freeMemMatrix(*m);
+        *m = result;
+    }
+}
+
 // counter
 
 counter initC(matrix m) {
@@ -307,7 +344,7 @@ int getValueC(counter *c) {
     return getValue(c->m, p);
 }
 
-int *getLinkC(counter *c){
+int *getLinkC(counter *c) {
     position p = getPositionC(c);
 
     return getLink(c->m, p);
@@ -329,7 +366,7 @@ void muvC(counter *c) {
 
 // from console
 
-matrix fCons_inputSquareMatrix(){
+matrix fCons_inputSquareMatrix() {
     int n;
     scanf("%d", &n);
 
@@ -340,7 +377,7 @@ matrix fCons_inputSquareMatrix(){
     return m;
 }
 
-matrix fCons_inputMatrix(){
+matrix fCons_inputMatrix() {
     int n_r, n_c;
     scanf("%d %d", &n_r, &n_c);
 
