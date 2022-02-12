@@ -10,4 +10,4 @@ add_executable(5d
         libs/algorithms/oneDimArray/oneDimArray.c libs/algorithms/oneDimArray/oneDimArray.h
         libs/algorithms/heapFunctions/heapFunctions.c libs/algorithms/heapFunctions/heapFunctions.h
         tasks/task2.c
-)
+        tasks/task3.c)
