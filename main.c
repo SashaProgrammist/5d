@@ -1,9 +1,9 @@
 #include "libs/data_structures/matrix/matrix.h"
 
-void task9();
+void task10();
 
 int main() {
-    task9();
+    task10();
 
     return 0;
 }
