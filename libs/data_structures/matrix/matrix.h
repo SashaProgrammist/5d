@@ -115,6 +115,8 @@ int *getLinkC(counter *c);
 
 position getPositionC(counter *c);
 
+position getReversPositionC(counter *c);
+
 void setValueC(counter *c, int value);
 
 void muvC(counter *c);

@@ -217,7 +217,7 @@ position getMaxValuePos(matrix m) {
     return result;
 }
 
-matrix getSquareOfMatrix(matrix m){
+matrix getSquareOfMatrix(matrix m) {
     return getMulMatrices(m, m);
 }
 
@@ -236,8 +236,8 @@ matrix getMulMatrices(matrix m1, matrix m2) {
         int currentSum = 0;
 
         for (int i = 0; i < n; ++i)
-            currentSum += getValue(m1, (position) {currentPosition.rowIndex,i}) *
-                          getValue(m2, (position) {i,currentPosition.colIndex});
+            currentSum += getValue(m1, (position) {currentPosition.rowIndex, i}) *
+                          getValue(m2, (position) {i, currentPosition.colIndex});
 
         setValue(result, currentPosition, currentSum);
     }
@@ -328,6 +328,13 @@ position getPositionC(counter *c) {
     muvC(c);
 
     return result;
+}
+
+position getReversPositionC(counter *c) {
+    position p = getPositionC(c);
+
+    return (position) {c->m.nRows - 1 - p.rowIndex,
+                       c->m.nCols - 1 - p.colIndex};
 }
 
 int getValueC(counter *c) {
