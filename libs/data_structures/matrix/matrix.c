@@ -3,11 +3,15 @@
 //
 
 #include "matrix.h"
-#include "../../algorithms/heapFunctions/heapFunctions.h"
 
 // memory
 
 matrix getMemMatrix(int nRows, int nCols) {
+    if (nRows <= 0 || nCols <= 0) {
+        fprintf(stderr, "value error");
+        exit(1);
+    }
+
     int **values = (int **) malloc(sizeof(int *) * nRows);
     for (int i = 0; i < nRows; i++)
         values[i] = (int *) malloc(sizeof(int) * nCols);
@@ -16,6 +20,11 @@ matrix getMemMatrix(int nRows, int nCols) {
 
 matrix *getMemArrayOfMatrices(int nMatrices,
                               int nRows, int nCols) {
+    if (nMatrices <= 0 || nRows <= 0 || nCols <= 0) {
+        fprintf(stderr, "value error");
+        exit(1);
+    }
+
     matrix *ms = (matrix *) malloc(sizeof(matrix) * nMatrices);
     for (int i = 0; i < nMatrices; i++)
         ms[i] = getMemMatrix(nRows, nCols);
@@ -23,8 +32,10 @@ matrix *getMemArrayOfMatrices(int nMatrices,
 }
 
 void freeMemMatrix(matrix m) {
-    for (int i = 0; i < m.nRows; i++)
+    for (int i = 0; i < m.nRows; i++) {
         free(m.values[i]);
+        m.values[i] = NULL;
+    }
 
     free(m.values);
 }
@@ -69,6 +80,11 @@ void outputMatrices(matrix *ms, int nMatrices) {
 
 matrix createMatrixFromArray(const int *values,
                              int nRows, int nCols) {
+    if (nRows <= 0 || nCols <= 0) {
+        fprintf(stderr, "value error");
+        exit(1);
+    }
+
     matrix m = getMemMatrix(nRows, nCols);
     counter c = initC(m);
     int i = 0;
@@ -98,10 +114,22 @@ matrix *createArrayOfMatrixFromArray(const int *values,
 // swap
 
 void swapRows(matrix m, int i1, int i2) {
+    if (i1 < 0 || i1 >= m.nRows ||
+        i2 < 0 || i2 >= m.nRows) {
+        fprintf(stderr, "value error");
+        exit(1);
+    }
+    if (i1 == i2) return;
     swap(m.values + i1, m.values + i2, sizeof(int *));
 }
 
 void swapColumns(matrix m, int j1, int j2) {
+    if (j1 < 0 || j1 >= m.nCols ||
+        j2 < 0 || j2 >= m.nCols) {
+        fprintf(stderr, "value error");
+        exit(1);
+    }
+    if (j1 == j2) return;
     for (int i = 0; i < m.nRows; i++)
         swap(m.values[i] + j1, m.values[i] + j2, sizeof(int));
 }
@@ -318,8 +346,6 @@ counter initC(matrix m) {
 }
 
 position getPositionC(counter *c) {
-    if (c->isFinished) return (position) {-1, -1};
-
     position result = (position) {
             c->count / c->m.nCols,
             c->count % c->m.nCols
@@ -356,8 +382,6 @@ void setValueC(counter *c, int value) {
 }
 
 void muvC(counter *c) {
-    if (c->isFinished) return;
-
     (c->count)++;
     if (c->count / c->m.nCols >= c->m.nRows)
         c->isFinished = true;

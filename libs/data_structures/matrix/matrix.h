@@ -10,6 +10,9 @@
 #include <memory.h>
 #include <stdbool.h>
 
+#include "../../algorithms/oneDimArray/oneDimArray.h"
+
+
 typedef struct matrix {
     int **values; // элементы матрицы
     int nRows;    // количество рядов

@@ -1,9 +1,7 @@
-#include "libs/data_structures/matrix/matrix.h"
-
-void task12();
+#include "libs/data_structures/matrix/test/testMatrix.h"
 
 int main() {
-    task12();
+    test();
 
     return 0;
 }
