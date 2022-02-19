@@ -52,16 +52,16 @@ void f_inputMatrices(f_matrix *ms, int nM) {
 
 void f_freeMemMatrix(f_matrix m) {
     for (int i = 0; i < m.nRows; i++)
-        free(m.values[i]);
+        free((void *)m.values[i]);
 
-    free(m.values);
+    free((void *)m.values);
 }
 
 void f_freeMemMatrices(f_matrix *ms, int nM) {
     for (int i = 0; i < nM; ++i)
         f_freeMemMatrix(ms[i]);
 
-    free(ms);
+    free((void *)ms);
 }
 
 void f_fCons_inputMatrices(f_matrix **ms, int *nM) {

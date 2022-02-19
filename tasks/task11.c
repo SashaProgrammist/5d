@@ -17,7 +17,7 @@ int getNSpecialElement(matrix m){
     for (int j = 0; j < m.nCols; ++j) {
         int *currentColum = getColumn(m, j);
         result += getCountSpecialNumber(currentColum, m.nRows);
-        free(currentColum);
+        free((void *)currentColum);
     }
 
     return result;

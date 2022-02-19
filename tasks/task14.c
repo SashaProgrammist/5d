@@ -36,7 +36,7 @@ void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
         if (countsZeroRows[i] == max)
             outputMatrix(ms[i]);
 
-    free(countsZeroRows);
+    free((void *)countsZeroRows);
 }
 
 void test_task14() {

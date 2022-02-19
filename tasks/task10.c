@@ -23,7 +23,7 @@ int countNUnique(long long *a, int n) {
             j = i;
         }
 
-    free(workingMem);
+    free((void *) workingMem);
     return result;
 }
 
@@ -35,7 +35,7 @@ int countEqClassesByRowsSum(matrix m) {
 
     int result = countNUnique(sums, m.nRows);
 
-    free(sums);
+    free((void *)sums);
     return result;
 }
 

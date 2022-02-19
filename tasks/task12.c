@@ -25,7 +25,7 @@ void swapPenultimateRow(matrix m, int n) {
     for (int j = 0; j < m.nCols; ++j)
         penultimateRow[j] = colum[j];
 
-    free(colum);
+    free((void *)colum);
 }
 
 void swapColumLeftMinPenultimateRow(matrix m) {

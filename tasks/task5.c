@@ -10,7 +10,7 @@ void transposeIfMatrixHasEqualSumOfRows(matrix *m) {
     if (isUnique(sumOfRows, m->nRows))
         transposeSquareMatrix(*m);
 
-    free(sumOfRows);
+    free((void *)sumOfRows);
 }
 
 void task5() {

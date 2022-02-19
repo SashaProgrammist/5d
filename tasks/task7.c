@@ -16,7 +16,7 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
 
     long long result = getSum(maxes, n);
     result -= maxes[m.nRows - 1];
-    free(maxes);
+    free((void *)maxes);
     return result;
 }
 

@@ -6,468 +6,474 @@
 #include "oneDimArray.h"
 
 void inputArray(int *array, size_t length) {
-	for (size_t i = 0; i < length; i++)
-		scanf("%d", array + i);
+    for (size_t i = 0; i < length; i++)
+        scanf("%d", array + i);
 }
 
 void setInputArray(int **array, size_t length) {
-	createIntArray(array, length);
+    createIntArray(array, length);
 
-	inputArray(*array, length);
+    inputArray(*array, length);
 }
 
 void createIntArray(int **array, size_t length) {
-	void *prototype;
-	createArray(&prototype, length, sizeof(int));
-	*array = (int *)prototype;
+    void *prototype;
+    createArray(&prototype, length, sizeof(int));
+    *array = (int *) prototype;
 }
 
 void createLongLongArray(long long **array, size_t length) {
-	void *prototype;
-	createArray(&prototype, length, sizeof(long long));
-	*array = (long long *)prototype;
+    void *prototype;
+    createArray(&prototype, length, sizeof(long long));
+    *array = (long long *) prototype;
 }
 
 void createArray(void **array, size_t length, size_t sizeElement) {
-	*array = malloc(length * sizeElement);
+    *array = malloc(length * sizeElement);
 }
 
 void printArray(int *array, size_t length) {
-	for (size_t i = 0; i < length; i++)
-		printf("%d ", array[i]);
+    for (size_t i = 0; i < length; i++)
+        printf("%d ", array[i]);
 
-	printf("\n");
+    printf("\n");
 }
 
 int getIndexOfElementFirstSatisfiesCondition(int array[], size_t length, int condition(int)) {
-	for (size_t i = 0; i < length; i++)
-		if (condition(array[i]))
-			return i;
+    for (size_t i = 0; i < length; i++)
+        if (condition(array[i]))
+            return i;
 
-	return -1;
+    return -1;
 }
 
 int getIndexOfElementLastSatisfiesCondition(int array[], size_t length, int condition(int)) {
-	for (size_t i = length; i > 0; i--)
-		if (condition(array[i - 1]))
-			return i - 1;
+    for (size_t i = length; i > 0; i--)
+        if (condition(array[i - 1]))
+            return i - 1;
 
-	return -1;
+    return -1;
 }
 
 int getCountElementsSatisfiesCondition(int array[], size_t length, int condition(int)) {
-	int result = 0;
+    int result = 0;
 
-	for (size_t i = length; i > 0; i--)
-		if (condition(array[i - 1]))
-			result++;
+    for (size_t i = length; i > 0; i--)
+        if (condition(array[i - 1]))
+            result++;
 
-	return result;
+    return result;
 }
 
 void invertArray(int array[], size_t length) {
-	int *lastELement = array + length - 1;
+    int *lastELement = array + length - 1;
 
-	for (size_t i = 0; i < length / 2; i++)
-		swapInt(array + i, lastELement - i);
+    for (size_t i = 0; i < length / 2; i++)
+        swapInt(array + i, lastELement - i);
 }
 
 int isArrayPolendrom(int array[], size_t length) {
-	size_t indexLast = length - 1;
-	size_t indexMiddle = length / 2;
+    size_t indexLast = length - 1;
+    size_t indexMiddle = length / 2;
 
-	for (size_t i = 0; i < indexMiddle; i++)
-		if (array[i] != array[indexLast - i])
-			return false;
+    for (size_t i = 0; i < indexMiddle; i++)
+        if (array[i] != array[indexLast - i])
+            return false;
 
-	return true;
+    return true;
 }
 
 void removeElementsWithSatisfyingConditionIndex(int array[], size_t *length, int condition(int)) {
-	size_t indexReading = 0;
-	while (indexReading < *length && !condition(indexReading))
-		indexReading++;
+    size_t indexReading = 0;
+    while (indexReading < *length && !condition(indexReading))
+        indexReading++;
 
-	size_t indexWritte = indexReading;
-	indexReading++;
+    size_t indexWritte = indexReading;
+    indexReading++;
 
-	for (; indexReading < *length; indexReading++) {
-		if (!condition(indexReading)) {
-			array[indexWritte] = array[indexReading];
-			indexWritte++;
-		}
-	}
+    for (; indexReading < *length; indexReading++) {
+        if (!condition(indexReading)) {
+            array[indexWritte] = array[indexReading];
+            indexWritte++;
+        }
+    }
 
-	*length = indexWritte;
+    *length = indexWritte;
 }
 
 void sort(int array[], size_t length) {
-	for (size_t i = 0; i < length; i++) {
-		size_t iMin = getFirstIndexMin(array + i, length - i) + i;
+    for (size_t i = 0; i < length; i++) {
+        size_t iMin = getFirstIndexMin(array + i, length - i) + i;
 
-		swapInt(array + i, array + iMin);
-	}
+        swapInt(array + i, array + iMin);
+    }
 }
 
 void removeElementsSatisfyingCondition(int array[], size_t *length, int condition(int)) {
-	size_t indexReading = 0;
-	while (indexReading < *length && !condition(array[indexReading]))
-		indexReading++;
+    size_t indexReading = 0;
+    while (indexReading < *length && !condition(array[indexReading]))
+        indexReading++;
 
-	size_t indexWritte = indexReading;
-	indexReading++;
+    size_t indexWritte = indexReading;
+    indexReading++;
 
-	for (; indexReading < *length; indexReading++) {
-		if (!condition(array[indexReading])) {
-			array[indexWritte] = array[indexReading];
-			indexWritte++;
-		}
-	}
+    for (; indexReading < *length; indexReading++) {
+        if (!condition(array[indexReading])) {
+            array[indexWritte] = array[indexReading];
+            indexWritte++;
+        }
+    }
 
-	*length = indexWritte;
+    *length = indexWritte;
 }
 
 void insertElementIntoArray(int array[], size_t *length, int element, size_t index) {
-	int slidingElement = element;
+    int slidingElement = element;
 
-	for (size_t i = index; i <= *length; i++)
-		swapInt(array + i, &slidingElement);
+    for (size_t i = index; i <= *length; i++)
+        swapInt(array + i, &slidingElement);
 
-	++*length;
+    ++*length;
 }
 
 void append(int array[], size_t *length, int element) {
-	array[*length] = element;
+    array[*length] = element;
 
-	++*length;
+    ++*length;
 }
 
 int appendMalloc(int **array, size_t *length, int element) {
-	int *copyArray = (int *)realloc(*array, sizeof(int) * (*length + 1));
+    int *copyArray = (int *) realloc(*array, sizeof(int) * (*length + 1));
 
-	if (copyArray != NULL) {
-		*array = copyArray;
-		*array[*length] = element;
+    if (copyArray != NULL) {
+        *array = copyArray;
+        *array[*length] = element;
 
-		++*length;
-		return 0;
-	} else
-		return -1;
+        ++*length;
+        return 0;
+    } else
+        return -1;
 }
 
 int pop(int array[], size_t *length, size_t index) {
-	int popElement = array[index];
+    int popElement = array[index];
 
-	for (size_t i = index + 1; i < *length; i++)
-		array[i - 1] = array[i];
+    for (size_t i = index + 1; i < *length; i++)
+        array[i - 1] = array[i];
 
-	(*length)--;
+    (*length)--;
 
-	return popElement;
+    return popElement;
 }
 
 int removeElementWithoutPreservingOrder(int array[], size_t *length, size_t index) {
-	int removeElement = array[index];
+    int removeElement = array[index];
 
-	array[index] = array[*length - 1];
+    array[index] = array[*length - 1];
 
-	--*length;
-	
-	return removeElement;
+    --*length;
+
+    return removeElement;
 }
 
 void forEach(int array[], size_t length, int function(int)) {
-	for (size_t i = 0; i < length; i++) {
-		array[i] = function(array[i]);
-	}
+    for (size_t i = 0; i < length; i++) {
+        array[i] = function(array[i]);
+    }
 }
 
 int getAbsoluteMin(int array[], size_t length) {
-	int min = mu_abs(array[0]);
+    int min = mu_abs(array[0]);
 
-	for (size_t i = 1; i < length; i++) {
-		min = min2(min, mu_abs(array[i]));
-	}
+    for (size_t i = 1; i < length; i++) {
+        min = min2(min, mu_abs(array[i]));
+    }
 }
 
 int *copy(int array[], size_t length) {
-	int *copyArray = (int *)malloc(length * sizeof(int));
+    int *copyArray = (int *) malloc(length * sizeof(int));
 
-	for (size_t i = 0; i < length; i++)
-		copyArray[i] = array[i];
+    for (size_t i = 0; i < length; i++)
+        copyArray[i] = array[i];
 
-	return copyArray;
+    return copyArray;
 }
 
 size_t getIndexAbsoluteMin(int array[], size_t length) {
-	int min = mu_abs(array[0]);
-	size_t iMin = 0;
+    int min = mu_abs(array[0]);
+    size_t iMin = 0;
 
-	for (size_t i = 1; i < length; i++) {
-		int curent = mu_abs(array[i]);
-		if (curent < min) {
-			min = curent;
-			iMin = i;
-		}
-	}
+    for (size_t i = 1; i < length; i++) {
+        int curent = mu_abs(array[i]);
+        if (curent < min) {
+            min = curent;
+            iMin = i;
+        }
+    }
 
-	return iMin;
+    return iMin;
 }
 
 static int _isFirstIndexMin(int a, int b) {
-	return a > b;
+    return a > b;
 }
 
 size_t getFirstIndexMin(int array[], size_t length) {
-	return getIndexBestInCondition(array, length, _isFirstIndexMin);
+    return getIndexBestInCondition(array, length, _isFirstIndexMin);
 }
 
 static int _isLastIndexMin(int a, int b) {
-	return a >= b;
+    return a >= b;
 }
 
 size_t getLastIndexMin(int array[], size_t length) {
-	return getIndexBestInCondition(array, length, _isLastIndexMin);
+    return getIndexBestInCondition(array, length, _isLastIndexMin);
 }
 
-int getMin(int *array, int size){
+int getMin(int *array, int size) {
     int iMin = getFirstIndexMin(array, size);
 
     return array[iMin];
 }
 
 static int _isFirstIndexMax(int a, int b) {
-	return a < b;
+    return a < b;
 }
 
 size_t getFirstIndexMax(int array[], size_t length) {
-	return getIndexBestInCondition(array, length, _isFirstIndexMax);
+    return getIndexBestInCondition(array, length, _isFirstIndexMax);
 }
 
 static int _isLastIndexMax(int a, int b) {
-	return a <= b;
+    return a <= b;
 }
 
 size_t getLastIndexMax(int array[], size_t length) {
-	return getIndexBestInCondition(array, length, _isLastIndexMax);
+    return getIndexBestInCondition(array, length, _isLastIndexMax);
 }
 
-int getMax(int *array, int size){
+int getMax(int *array, int size) {
     int iMin = getFirstIndexMax(array, size);
 
     return array[iMin];
 }
 
 size_t getIndexBestInCondition(int array[], size_t length, int condition(int, int)) {
-	size_t iBest = 0;
-	for (size_t j = 1; j < length; j++)
-		if (condition(array[iBest], array[j]))
-			iBest = j;
+    size_t iBest = 0;
+    for (size_t j = 1; j < length; j++)
+        if (condition(array[iBest], array[j]))
+            iBest = j;
 
-	return iBest;
+    return iBest;
 }
 
 int linearSearchElement(int array[], size_t length, int element) {
-	for (size_t i = 0; i < length; i++) {
-		if (array[i] == element)
-			return i;
-	}
+    for (size_t i = 0; i < length; i++) {
+        if (array[i] == element)
+            return i;
+    }
 
-	return -1;
+    return -1;
 }
 
 int binSearchElement(int array[], size_t length, int element) {
-	int rightBorder = 0;
-	int leftBorder = length - 1;
+    int rightBorder = 0;
+    int leftBorder = length - 1;
 
-	while (leftBorder >= rightBorder) {
-		int medle = rightBorder + (leftBorder - rightBorder) / 2;
+    while (leftBorder >= rightBorder) {
+        int medle = rightBorder + (leftBorder - rightBorder) / 2;
 
-		int curentElement = array[medle];
+        int curentElement = array[medle];
 
-		if (curentElement == element)
-			return medle;
+        if (curentElement == element)
+            return medle;
 
-		if (curentElement > element)
-			leftBorder = medle - 1;
-		else
-			rightBorder = medle + 1;
-	}
+        if (curentElement > element)
+            leftBorder = medle - 1;
+        else
+            rightBorder = medle + 1;
+    }
 
-	return -1;
+    return -1;
 }
 
 bool isUnique(long long int *array, size_t size) {
-	for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
         for (int j = i + 1; j < size; ++j)
             if (array[i] == array[j])
                 return false;
 
-	return true;
+    return true;
 }
 
 int isOrderedSequence(int array[], size_t length) {
-	return isNotDecreasingOrdering(array, length) ||
-		   isNotAscendingOrdering(array, length);
+    return isNotDecreasingOrdering(array, length) ||
+           isNotAscendingOrdering(array, length);
 }
 
-int isNotDecreasingOrdering(int array[], size_t length){
-	for (size_t i = 1; i < length; i++) 
-		if (array[i - 1] > array[i])
-			return false;
-	
-	return true;
+int isNotDecreasingOrdering(int array[], size_t length) {
+    for (size_t i = 1; i < length; i++)
+        if (array[i - 1] > array[i])
+            return false;
+
+    return true;
 }
 
 int isNotAscendingOrdering(int array[], size_t length) {
-	for (size_t i = 1; i < length; i++)
-		if (array[i - 1] < array[i])
-			return false;
+    for (size_t i = 1; i < length; i++)
+        if (array[i - 1] < array[i])
+            return false;
 
-	return true;
+    return true;
 }
 
 int getIndexElement(int array[], size_t length, int element, int isFirst) {
-	int i;
-	int change;
-	
-	if (isFirst) { i = 0;          change = 1; }
-	else		 { i = length - 1; change = -1; }
+    int i;
+    int change;
 
-	while (i >= 0 && i < length) {
-		if (array[i] == element)
-			return i;
+    if (isFirst) {
+        i = 0;
+        change = 1;
+    }
+    else {
+        i = length - 1;
+        change = -1;
+    }
 
-		i += change;
-	}
+    while (i >= 0 && i < length) {
+        if (array[i] == element)
+            return i;
 
-	return -1;
+        i += change;
+    }
+
+    return -1;
 }
 
 int getIndexExtremeInSortArray(int array[], size_t length, int condition(int), int isFirst) {
-	int rightBorder = -1;
-	int leftBorder = length;
+    int rightBorder = -1;
+    int leftBorder = length;
 
-	while (leftBorder - rightBorder > 1) {
-		int medle = rightBorder + (leftBorder - rightBorder) / 2;
+    while (leftBorder - rightBorder > 1) {
+        int medle = rightBorder + (leftBorder - rightBorder) / 2;
 
-		if (condition(array[medle]) ^ isFirst)
-			rightBorder = medle;
-		else
-			leftBorder = medle;
-	}
+        if (condition(array[medle]) ^ isFirst)
+            rightBorder = medle;
+        else
+            leftBorder = medle;
+    }
 
-	if (isFirst)
-		return leftBorder != length ? leftBorder : -1;
-	else
-		return rightBorder;
+    if (isFirst)
+        return leftBorder != length ? leftBorder : -1;
+    else
+        return rightBorder;
 }
 
 int getIndexFirstInArrayLargerNumber(int *array, size_t length, int number) {
-	int rightBorder = -1;
-	int leftBorder = length;
+    int rightBorder = -1;
+    int leftBorder = length;
 
-	while (leftBorder - rightBorder > 1) {
-		int medle = rightBorder + (leftBorder - rightBorder) / 2;
+    while (leftBorder - rightBorder > 1) {
+        int medle = rightBorder + (leftBorder - rightBorder) / 2;
 
-		if (array[medle] <= number)
-			rightBorder = medle;
-		else
-			leftBorder = medle;
-	}
+        if (array[medle] <= number)
+            rightBorder = medle;
+        else
+            leftBorder = medle;
+    }
 
-	return leftBorder;
+    return leftBorder;
 }
 
 int isAllElementsEqual(int *array, size_t length) {
-	if (length == 0)
-		return true;
+    if (length == 0)
+        return true;
 
-	int first = array[0];
+    int first = array[0];
 
-	for (size_t i = 1; i < length; i++)
-		if (first != array[i])
-			return false;
+    for (size_t i = 1; i < length; i++)
+        if (first != array[i])
+            return false;
 
-	return true;
+    return true;
 }
 
 int *getShiftedLeftArray(int *array, size_t length, size_t shift) {
-	int *resultArray = (int *)malloc(length * sizeof(int));
+    int *resultArray = (int *) malloc(length * sizeof(int));
 
-	if (resultArray == NULL)
-		return NULL;
+    if (resultArray == NULL)
+        return NULL;
 
-	for (size_t i = 0; i < length; i++) {
-		resultArray[(i + shift) % length] = array[i];
-	}
+    for (size_t i = 0; i < length; i++) {
+        resultArray[(i + shift) % length] = array[i];
+    }
 
-	return resultArray;
+    return resultArray;
 }
 
 int any(int *array, size_t length, int condition(int)) {
-	for (size_t i = 0; i < length; i++)
-		if (condition(array[i]))
-			return true;
+    for (size_t i = 0; i < length; i++)
+        if (condition(array[i]))
+            return true;
 
-	return false;
+    return false;
 }
 
 int all(int *array, size_t length, int condition(int)) {
-	for (size_t i = 0; i < length; i++)
-		if (!condition(array[i]))
-			return false;
+    for (size_t i = 0; i < length; i++)
+        if (!condition(array[i]))
+            return false;
 
-	return true;
+    return true;
 }
 
 int arraySplit(int *array, size_t length, int condition(int),
-				int **a, size_t *lengthA,
-				int **b, size_t *lengthB) {
+               int **a, size_t *lengthA,
+               int **b, size_t *lengthB) {
 
-	*a = (int *)malloc(0);
-	*lengthA = 0;
-	*b = (int *)malloc(0);
-	*lengthB = 0;
+    *a = (int *) malloc(0);
+    *lengthA = 0;
+    *b = (int *) malloc(0);
+    *lengthB = 0;
 
-	for (size_t i = 0; i < length; i++) {
-		int result;
-		if (condition(array[i]))
-			result = appendMalloc(a, lengthA, array[i]);
-		else
-			result = appendMalloc(b, lengthB, array[i]);
+    for (size_t i = 0; i < length; i++) {
+        int result;
+        if (condition(array[i]))
+            result = appendMalloc(a, lengthA, array[i]);
+        else
+            result = appendMalloc(b, lengthB, array[i]);
 
-		if (result == -1)
-			return -1;
-	}
+        if (result == -1)
+            return -1;
+    }
 
-	return 0;
+    return 0;
 }
 
 long long int getSum(int *array, size_t length) {
-	long long result = 0;
+    long long result = 0;
 
-	for (size_t i = 0; i < length; i++)
-		result += array[i];
+    for (size_t i = 0; i < length; i++)
+        result += array[i];
 
-	return result;
+    return result;
 }
 
 void setRandomElementsToArray(int *array, size_t length) {
-	for (size_t i = 0; i < length; i++)
-		array[i] = rand();
+    for (size_t i = 0; i < length; i++)
+        array[i] = rand();
 }
 
 void removeNonSatisfyingConditions(void *array,
                                    const size_t sizeElement,
                                    size_t *sizeArray,
                                    bool condition(void *)) {
-    const char *first = (char *)array;
+    const char *first = (char *) array;
     size_t iRead = 0;
     const size_t coumtAllBete = *sizeArray * sizeElement;
 
     while (iRead < coumtAllBete &&
-        condition(first + iRead)) {
+           condition(first + iRead)) {
         iRead += sizeElement;
     }
 
@@ -477,8 +483,8 @@ void removeNonSatisfyingConditions(void *array,
     while (iRead < coumtAllBete) {
         if (condition(first + iRead)) {
             swap(first + iRead,
-                first + iWrite,
-                sizeElement);
+                 first + iWrite,
+                 sizeElement);
 
             iWrite += sizeElement;
         }
@@ -490,16 +496,16 @@ void removeNonSatisfyingConditions(void *array,
 }
 
 void simplifyOrderedArray(void *array,
-						  const size_t sizeElement,
-	                      size_t *sizeArray,
-					      bool isEqual (void *, void *)) {
-	const char *first = (char *)array;
+                          const size_t sizeElement,
+                          size_t *sizeArray,
+                          bool isEqual(void *, void *)) {
+    const char *first = (char *) array;
     size_t iread = sizeElement;
-	const size_t coumtAllBete = *sizeArray * sizeElement;
+    const size_t coumtAllBete = *sizeArray * sizeElement;
 
     while (iread < coumtAllBete &&
-        !isEqual((void *)first + iread - sizeElement,
-                 (void *)first + iread)) {
+           !isEqual((void *) first + iread - sizeElement,
+                    (void *) first + iread)) {
         iread += sizeElement;
     }
 
@@ -508,22 +514,22 @@ void simplifyOrderedArray(void *array,
 
     while (iread < *sizeArray) {
         if (!isEqual(first + iread - sizeElement,
-			         first + iread)) {
+                     first + iread)) {
             swap(first + iread - sizeElement, first + iread,
-				 sizeElement);
+                 sizeElement);
             iwrite += sizeElement;
         }
         iread += sizeElement;
     }
 
-	*sizeArray = iwrite / sizeElement;
+    *sizeArray = iwrite / sizeElement;
 }
 
-long long scalarProduct(int *a, int *b, size_t size){
+long long scalarProduct(int *a, int *b, size_t size) {
     long long result = 0;
 
     for (int i = 0; i < size; ++i)
-        result += (long long )a[i] * b[i];
+        result += (long long) a[i] * b[i];
 
     return result;
 }

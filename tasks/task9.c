@@ -36,7 +36,7 @@ void insertionSortRowsMatrixByRowCriteriaF(matrix m,
         }
     }
 
-    free(resultsCriteriaInRows);
+    free((void *)resultsCriteriaInRows);
 }
 
 void sortByDistances(matrix m){

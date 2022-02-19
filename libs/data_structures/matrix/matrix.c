@@ -33,16 +33,16 @@ matrix *getMemArrayOfMatrices(int nMatrices,
 
 void freeMemMatrix(matrix m) {
     for (int i = 0; i < m.nRows; i++)
-        free(m.values[i]);
+        free((void *) m.values[i]);
 
-    free(m.values);
+    free((void *) m.values);
 }
 
 void freeMemMatrices(matrix *ms, int nMatrices) {
     for (int i = 0; i < nMatrices; ++i)
         freeMemMatrix(ms[i]);
 
-    free(ms);
+    free((void *) ms);
 }
 
 // input / output
@@ -164,7 +164,7 @@ void insertionSortRowsMatrixByRowCriteria(matrix m,
         resultsCriteriaInRows[currentIndexRow] = currentCriteria;
     }
 
-    free(resultsCriteriaInRows);
+    free((void *) resultsCriteriaInRows);
 }
 
 void insertionSortColsMatrixByColCriteria(matrix m,
@@ -174,7 +174,7 @@ void insertionSortColsMatrixByColCriteria(matrix m,
     for (int j = 0; j < m.nCols; ++j) {
         int *currentCol = getColumn(m, j);
         resultsCriteriaInCols[j] = criteria(currentCol, m.nRows);
-        free(currentCol);
+        free((void *) currentCol);
     }
 
     for (int i = 0; i < m.nCols; ++i) {
@@ -192,7 +192,7 @@ void insertionSortColsMatrixByColCriteria(matrix m,
         }
     }
 
-    free(resultsCriteriaInCols);
+    free((void *) resultsCriteriaInCols);
 }
 
 // get

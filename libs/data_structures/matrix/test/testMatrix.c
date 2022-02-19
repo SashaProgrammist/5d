@@ -145,7 +145,7 @@ void test_getColumn() {
         int *current = getColumn(m, j);
         for (int i = 0; i < r; ++i)
             assert(current[i] == values[j + i * c]);
-        free(current);
+        free((void *) current);
     }
 
     freeMemMatrix(m);
@@ -494,8 +494,12 @@ void test_muvC() {
 }
 
 void test_task13();
+
 void test_task14();
+
 void test_task16();
+
+void test_task17();
 
 void test() {
     test_getMemMatrix();
@@ -529,4 +533,5 @@ void test() {
     test_task13();
     test_task14();
     test_task16();
+    test_task17();
 }
