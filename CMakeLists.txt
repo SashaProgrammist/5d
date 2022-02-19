@@ -12,4 +12,4 @@ add_executable(5d
         tasks/task10.c tasks/task11.c tasks/task12.c
         libs/algorithms/oneDimArray/oneDimArray.c libs/algorithms/oneDimArray/oneDimArray.h
         libs/algorithms/heapFunctions/heapFunctions.c libs/algorithms/heapFunctions/heapFunctions.h
-        libs/data_structures/matrix/test/testMatrix.h libs/data_structures/matrix/test/testMatrix.c tasks/task13.c tasks/task14.c)
+        libs/data_structures/matrix/test/testMatrix.h libs/data_structures/matrix/test/testMatrix.c tasks/task13.c tasks/task14.c tasks/task15.c)

@@ -79,4 +79,6 @@ void task14() {
     fCons_inputMatrices(&ms, &nM);
 
     printMatrixWithMaxZeroRows(ms, nM);
+
+    freeMemMatrices(ms, nM);
 }
