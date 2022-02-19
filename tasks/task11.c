@@ -1,5 +1,4 @@
 #include "../libs/data_structures/matrix/matrix.h"
-#include "../libs/algorithms/oneDimArray/oneDimArray.h"
 
 int getCountSpecialNumber(int *a, int n){
     long long sum = getSum(a, n);
@@ -15,8 +14,11 @@ int getCountSpecialNumber(int *a, int n){
 int getNSpecialElement(matrix m){
     int result = 0;
 
-    for (int j = 0; j < m.nCols; ++j)
-        result += getCountSpecialNumber(getColumn(m, j), m.nRows);
+    for (int j = 0; j < m.nCols; ++j) {
+        int *currentColum = getColumn(m, j);
+        result += getCountSpecialNumber(currentColum, m.nRows);
+        free(currentColum);
+    }
 
     return result;
 }

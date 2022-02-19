@@ -1,5 +1,4 @@
 #include "../libs/data_structures/matrix/matrix.h"
-#include "../libs/algorithms/oneDimArray/oneDimArray.h"
 
 long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
     int n = m.nRows + m.nCols - 1;
@@ -15,7 +14,10 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
                 maxes[curIndex] = m.values[i][j];
         }
 
-    return getSum(maxes, n) - maxes[m.nRows - 1];
+    long long result = getSum(maxes, n);
+    result -= maxes[m.nRows - 1];
+    free(maxes);
+    return result;
 }
 
 void task7() {

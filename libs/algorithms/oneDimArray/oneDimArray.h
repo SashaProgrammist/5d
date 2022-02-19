@@ -284,7 +284,7 @@ int isNotAscendingOrdering(int array[], size_t length);
 /// индекс element из массива array размера length
 /// если он есть иначе '-1'
 /// </returns>
-int getIndexELement(int array[], size_t length, int element, int isFirst);
+int getIndexElement(int array[], size_t length, int element, int isFirst);
 
 /// <param name="array">отсортированный массив!!!!</param>
 /// <param name="length"></param>
@@ -356,5 +356,7 @@ void simplifyOrderedArray(void *array,
                           const size_t sizeElement,
                           size_t *sizeArray,
                           bool isEqual (void *, void *));
+
+long long scalarProduct(int *a, int *b, size_t size);
 
 #endif // !ONE_DIM_ARRAY

@@ -24,7 +24,7 @@ typedef struct position {
     int colIndex;
 } position;
 
-typedef struct counter{
+typedef struct counter {
     matrix m;
     int count;
     bool isFinished;
@@ -92,7 +92,7 @@ matrix getMulMatrices(matrix m1, matrix m2);
 
 // set
 
-void setValue(matrix m, position p, int value) ;
+void setValue(matrix m, position p, int value);
 
 // bool
 
@@ -107,6 +107,8 @@ bool isSymmetricMatrix(matrix m);
 // transformations
 
 void transposeSquareMatrix(matrix m);
+
+void transposeMatrix(matrix *m);
 
 // counter
 
@@ -129,5 +131,7 @@ void muvC(counter *c);
 matrix fCons_inputSquareMatrix();
 
 matrix fCons_inputMatrix();
+
+void fCons_inputMatrices(matrix **ms, int *nM);
 
 #endif //INC_5D_MATRIX_H

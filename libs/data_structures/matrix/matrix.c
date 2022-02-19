@@ -25,17 +25,15 @@ matrix *getMemArrayOfMatrices(int nMatrices,
         exit(1);
     }
 
-    matrix *ms = (matrix *) malloc(sizeof(matrix) * nMatrices);
+    matrix *ms = (matrix *) malloc(nMatrices * sizeof(matrix));
     for (int i = 0; i < nMatrices; i++)
         ms[i] = getMemMatrix(nRows, nCols);
     return ms;
 }
 
 void freeMemMatrix(matrix m) {
-    for (int i = 0; i < m.nRows; i++) {
+    for (int i = 0; i < m.nRows; i++)
         free(m.values[i]);
-        m.values[i] = NULL;
-    }
 
     free(m.values);
 }
@@ -87,10 +85,9 @@ matrix createMatrixFromArray(const int *values,
 
     matrix m = getMemMatrix(nRows, nCols);
     counter c = initC(m);
-    int i = 0;
 
     while (!c.isFinished)
-        setValueC(&c, values[i++]);
+        setValueC(&c, values[c.count]);
 
     return m;
 }
@@ -99,13 +96,13 @@ matrix *createArrayOfMatrixFromArray(const int *values,
                                      int nMatrices,
                                      int nRows, int nCols) {
     matrix *ms = getMemArrayOfMatrices(nMatrices, nRows, nCols);
-    int j = 0;
+    int currentValueIndex = 0;
 
     for (int i = 0; i < nMatrices; ++i) {
         counter c = initC(ms[i]);
 
         while (!c.isFinished)
-            setValueC(&c, values[j++]);
+            setValueC(&c, values[currentValueIndex++]);
     }
 
     return ms;
@@ -119,7 +116,9 @@ void swapRows(matrix m, int i1, int i2) {
         fprintf(stderr, "value error");
         exit(1);
     }
+
     if (i1 == i2) return;
+
     swap(m.values + i1, m.values + i2, sizeof(int *));
 }
 
@@ -129,7 +128,9 @@ void swapColumns(matrix m, int j1, int j2) {
         fprintf(stderr, "value error");
         exit(1);
     }
+
     if (j1 == j2) return;
+
     for (int i = 0; i < m.nRows; i++)
         swap(m.values[i] + j1, m.values[i] + j2, sizeof(int));
 }
@@ -144,19 +145,23 @@ void insertionSortRowsMatrixByRowCriteria(matrix m,
         resultsCriteriaInRows[i] =
                 criteria(m.values[i], m.nCols);
 
-    for (int i = 0; i < m.nRows; ++i) {
-        int current = i;
-        for (int j = i + 1; j < m.nRows; ++j)
-            if (resultsCriteriaInRows[current] >
-                resultsCriteriaInRows[j])
-                current = j;
+    for (int i = 1; i < m.nRows; ++i) {
+        int currentSwapRow = i - 1;
+        int currentCriteria = resultsCriteriaInRows[i];
+        int *currentRow = m.values[i];
+        int currentIndexRow = i;
 
-        if (current != i) {
-            swapRows(m, i, current);
-            swap(resultsCriteriaInRows + current,
-                 resultsCriteriaInRows + i,
-                 sizeof(int));
+        while (currentSwapRow >= 0 &&
+               resultsCriteriaInRows[currentSwapRow] > currentCriteria) {
+            m.values[currentIndexRow] = m.values[currentSwapRow];
+            resultsCriteriaInRows[currentIndexRow] = resultsCriteriaInRows[currentSwapRow];
+
+            currentSwapRow--;
+            currentIndexRow--;
         }
+
+        m.values[currentIndexRow] = currentRow;
+        resultsCriteriaInRows[currentIndexRow] = currentCriteria;
     }
 
     free(resultsCriteriaInRows);
@@ -261,11 +266,10 @@ matrix getMulMatrices(matrix m1, matrix m2) {
 
     while (!c.isFinished) {
         position currentPosition = getPositionC(&c);
-        int currentSum = 0;
 
-        for (int i = 0; i < n; ++i)
-            currentSum += getValue(m1, (position) {currentPosition.rowIndex, i}) *
-                          getValue(m2, (position) {i, currentPosition.colIndex});
+        int *curColum = getColumn(m2, currentPosition.colIndex);
+        int currentSum = scalarProduct(m1.values[currentPosition.rowIndex], curColum, n);
+        free((void *) curColum);
 
         setValue(result, currentPosition, currentSum);
     }
@@ -277,7 +281,7 @@ matrix getMulMatrices(matrix m1, matrix m2) {
 // set
 
 void setValue(matrix m, position p, int value) {
-    m.values[p.rowIndex][p.colIndex] = value;
+    *getLink(m, p) = value;
 }
 
 // bool
@@ -290,13 +294,15 @@ bool twoMatricesEqual(matrix m1, matrix m2) {
     if (m1.nRows != m2.nRows || m1.nCols != m2.nCols)
         return false;
 
-    counter c = initC(m1);
-    while (!c.isFinished) {
-        position p = getPositionC(&c);
+    int nRows = m1.nRows;
+    int nColum = m1.nCols;
+    int sizeRow = nColum * sizeof(int);
 
-        if (getValue(m1, p) != getValue(m2, p))
+    for (int i = 0; i < nRows; ++i)
+        if (0 != memcmp(m1.values[i],
+                        m2.values[i],
+                        sizeRow))
             return false;
-    }
 
     return true;
 }
@@ -304,6 +310,7 @@ bool twoMatricesEqual(matrix m1, matrix m2) {
 bool isEMatrix(matrix m) {
     if (!isSquareMatrix(m))
         return false;
+
     int n = m.nRows;
 
     for (int i = 0; i < n; ++i)
@@ -317,6 +324,7 @@ bool isEMatrix(matrix m) {
 bool isSymmetricMatrix(matrix m) {
     if (!isSquareMatrix(m))
         return false;
+
     int n = m.nRows;
 
     for (int i = 0; i < n; ++i)
@@ -332,11 +340,28 @@ bool isSymmetricMatrix(matrix m) {
 void transposeSquareMatrix(matrix m) {
     if (!isSquareMatrix(m))
         return;
-    int n = m.nRows;
 
+    int n = m.nRows;
     for (int i = 0; i < n; ++i)
         for (int j = i + 1; j < n; ++j)
             swap(m.values[i] + j, m.values[j] + i, sizeof(int));
+}
+
+void transposeMatrix(matrix *m) {
+    if (isSquareMatrix(*m)) {
+        transposeSquareMatrix(*m);
+        return;
+    }
+
+    matrix result = getMemMatrix(m->nCols, m->nCols);
+
+    for (int i = 0; i < m->nRows; ++i)
+        for (int j = 0; j < m->nCols; ++j)
+            result.values[j][i] = m->values[i][j];
+
+    freeMemMatrix(*m);
+
+    *m = result;
 }
 
 // counter
@@ -409,4 +434,13 @@ matrix fCons_inputMatrix() {
     inputMatrix(m);
 
     return m;
+}
+
+void fCons_inputMatrices(matrix **ms, int *nM) {// 4 * OK
+    int nR, nC;
+    scanf("%d %d %d", nM, &nR, &nC);
+
+    *ms = getMemArrayOfMatrices(*nM, nR, nC);
+
+    inputMatrices(*ms, *nM);
 }

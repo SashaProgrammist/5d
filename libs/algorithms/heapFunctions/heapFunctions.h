@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+#include <memory.h>
 
 #define VOWEL_INDICES 17842449 // 1 0001 0000 0100 0001 0001 0001 bin
 

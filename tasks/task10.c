@@ -1,5 +1,4 @@
 #include "../libs/data_structures/matrix/matrix.h"
-#include "../libs/algorithms/oneDimArray/oneDimArray.h"
 
 int cmp_long_long(const void *pa, const void *pb) {
     long long a = *((long long *) pa);
@@ -13,7 +12,8 @@ int cmp_long_long(const void *pa, const void *pb) {
 int countNUnique(long long *a, int n) {
     long long *workingMem = (long long *) malloc(n * sizeof(long long));
     memcpy(workingMem, a, n * sizeof(long long));
-    qsort(workingMem, n, sizeof(long long), cmp_long_long);
+    qsort(workingMem, n, sizeof(long long),
+          cmp_long_long);
 
     int result = 0;
     for (int i = 0, j = 0; i <= n; ++i)

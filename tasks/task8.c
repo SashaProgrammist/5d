@@ -1,31 +1,21 @@
 #include "../libs/data_structures/matrix/matrix.h"
 
-
-bool isInArea(position pos, position max) {
-    return abs(pos.colIndex - max.colIndex) <=
-           (max.rowIndex - pos.rowIndex);
-}
-
 long long getMinInArea(matrix m) {
-    position posMax = (position) {
-            m.nRows - 1,
-            m.nCols - 1};
+    position posMax = getMaxValuePos(m);
     int min = getValue(m, posMax);
-    int max = getValue(m, posMax);
 
-    counter c = initC(m);
+    for (int i = posMax.rowIndex - 1; i >= 0; i--) {
+        int indent = posMax.rowIndex - i;
+        int startArea = posMax.colIndex - indent;
+        if (startArea < 0) startArea = 0;
+        int endArea = posMax.colIndex + indent;
+        if (endArea >= m.nCols) endArea = m.nCols - 1;
 
-    while (!c.isFinished){
-        position currentP = getReversPositionC(&c);
-        int currentV = getValue(m, currentP);
-
-        if (currentV > max) {
-            max = currentV;
-            posMax = currentP;
-            min = currentV;
-        } else if (isInArea(currentP, posMax) &&
-                   currentV < min)
-            min = currentV;
+        for (int j = startArea; j <= endArea; ++j){
+            int currentV = m.values[i][j];
+            if (currentV < min)
+                min = currentV;
+        }
     }
 
     return min;

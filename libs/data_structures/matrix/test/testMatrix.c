@@ -493,6 +493,8 @@ void test_muvC() {
     freeMemMatrix(m);
 }
 
+void test_task13();
+
 void test() {
     test_getMemMatrix();
     test_getMemArrayOfMatrices();
@@ -521,4 +523,6 @@ void test() {
     test_getReversPositionC();
     test_setValueC();
     test_muvC();
+
+    test_task13();
 }

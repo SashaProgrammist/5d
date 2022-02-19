@@ -327,7 +327,7 @@ int isNotAscendingOrdering(int array[], size_t length) {
 	return true;
 }
 
-int getIndexELement(int array[], size_t length, int element, int isFirst) {
+int getIndexElement(int array[], size_t length, int element, int isFirst) {
 	int i;
 	int change;
 	
@@ -498,8 +498,8 @@ void simplifyOrderedArray(void *array,
 	const size_t coumtAllBete = *sizeArray * sizeElement;
 
     while (iread < coumtAllBete &&
-        !isEqual(first + iread - sizeElement,
-		     	 first + iread)) {
+        !isEqual((void *)first + iread - sizeElement,
+                 (void *)first + iread)) {
         iread += sizeElement;
     }
 
@@ -517,4 +517,13 @@ void simplifyOrderedArray(void *array,
     }
 
 	*sizeArray = iwrite / sizeElement;
+}
+
+long long scalarProduct(int *a, int *b, size_t size){
+    long long result = 0;
+
+    for (int i = 0; i < size; ++i)
+        result += (long long )a[i] * b[i];
+
+    return result;
 }

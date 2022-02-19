@@ -184,13 +184,12 @@ int nok(int number1, int number2) {
 }
 
 void swap(void *a, void *b, size_t size) {
-    char *arg1 = (char *)a;
-    char *arg2 = (char *)b;
+    void *buf = malloc(size);
 
-    for (size_t i = 0; i < size; i++) {
-        char t = arg1[i];
-        arg1[i] = arg2[i];
-        arg2[i] = t;
-    }
+    memcpy(buf, a, size);
+    memcpy(a, b, size);
+    memcpy(b, buf, size);
+
+    free(buf);
 }
 
