@@ -268,7 +268,7 @@ matrix getMulMatrices(matrix m1, matrix m2) {
         position currentPosition = getPositionC(&c);
 
         int *curColum = getColumn(m2, currentPosition.colIndex);
-        int currentSum = scalarProduct(m1.values[currentPosition.rowIndex], curColum, n);
+        int currentSum = getScalarProduct(m1.values[currentPosition.rowIndex], curColum, n);
         free((void *) curColum);
 
         setValue(result, currentPosition, currentSum);

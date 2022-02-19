@@ -501,6 +501,8 @@ void test_task16();
 
 void test_task17();
 
+void test_task18();
+
 void test() {
     test_getMemMatrix();
     test_getMemArrayOfMatrices();
@@ -534,4 +536,5 @@ void test() {
     test_task14();
     test_task16();
     test_task17();
+    test_task18();
 }

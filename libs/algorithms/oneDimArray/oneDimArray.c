@@ -525,7 +525,7 @@ void simplifyOrderedArray(void *array,
     *sizeArray = iwrite / sizeElement;
 }
 
-long long scalarProduct(int *a, int *b, size_t size) {
+long long getScalarProduct(int *a, int *b, size_t size) {
     long long result = 0;
 
     for (int i = 0; i < size; ++i)

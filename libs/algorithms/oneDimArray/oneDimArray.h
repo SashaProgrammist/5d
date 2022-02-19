@@ -357,6 +357,6 @@ void simplifyOrderedArray(void *array,
                           size_t *sizeArray,
                           bool isEqual (void *, void *));
 
-long long scalarProduct(int *a, int *b, size_t size);
+long long getScalarProduct(int *a, int *b, size_t size);
 
 #endif // !ONE_DIM_ARRAY

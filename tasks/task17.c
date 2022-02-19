@@ -3,7 +3,7 @@
 #include <math.h>
 #include <assert.h>
 
-double getScalarProduct(double *a, double *b, size_t size) {
+double d_getScalarProduct(double *a, double *b, size_t size) {
     double result = 0;
 
     for (int i = 0; i < size; ++i)
@@ -40,7 +40,7 @@ int getVectorIndexWithMaxAngle(matrix m, int *b) {
 
     for (int i = 0; i < m.nRows; ++i) {
         double *currentNormal = getNormal(m.values[i], m.nCols);
-        double currentCos = getScalarProduct(currentNormal, bNormal, m.nCols);
+        double currentCos = d_getScalarProduct(currentNormal, bNormal, m.nCols);
 
         if (currentCos < minCos) {
             minCos = currentCos;
