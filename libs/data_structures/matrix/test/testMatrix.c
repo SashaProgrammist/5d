@@ -495,6 +495,7 @@ void test_muvC() {
 
 void test_task13();
 void test_task14();
+void test_task16();
 
 void test() {
     test_getMemMatrix();
@@ -527,4 +528,5 @@ void test() {
 
     test_task13();
     test_task14();
+    test_task16();
 }
