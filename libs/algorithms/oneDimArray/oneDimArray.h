@@ -3,7 +3,9 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+
 #include "../heapFunctions/heapFunctions.h"
+#include "../compares/compares.h"
 
 /// <summary>
 /// производит ввод массива array размера length
@@ -19,7 +21,7 @@ void setInputArray(int **array, size_t length);
 /// </summary>
 /// <param name="array"></param>
 /// <param name="length"></param>
-void printArray(int *array, size_t length);
+void printArray(int *array, size_t count);
 
 /// <param name="array"></param>
 /// <param name="length"></param>
@@ -85,6 +87,8 @@ void removeElementsWithSatisfyingConditionIndex(int array[], size_t *length, int
 /// <param name="array"></param>
 /// <param name="length"></param>
 void sort(int array[], size_t length);
+
+void long_long_sort(long long *array, size_t count);
 
 /// <summary>
 /// удоляет элименты
@@ -171,12 +175,9 @@ void forEach(int Array[], size_t length, int function(int));
 
 int getAbsoluteMin(int array[], size_t length);
 
-/// <param name="array"></param>
-/// <param name="length"></param>
-/// <returns>
-/// копию массива array размера length
-/// </returns>
-int *copy(int array[], size_t length);
+void *copy(void *mem, size_t size);
+
+long long *longlong_copy(long long *arr, size_t count);
 
 size_t getIndexAbsoluteMin(int array[], size_t length);
 
@@ -222,7 +223,7 @@ int getMax(int *array, int size);
 /// состоит ли массив array размера length
 /// из уникальных элиментов 
 /// </returns>
-bool isUnique(long long int *array, size_t size);
+bool isUnique(long long int *array, size_t count);
 
 /// <param name="array"></param>
 /// <param name="length"></param>
@@ -323,9 +324,11 @@ int binSearchElement(int array[], size_t length, int element);
 
 void setRandomElementsToArray(int *array, size_t length);
 
-void createIntArray(int **array, size_t length);
+void createIntArray(int **array, size_t count);
 
 void createLongLongArray(long long **array, size_t length);
+
+void createFloatArray(float **array, size_t length);
 
 void createArray(void **array, size_t length, size_t sizeElement);
 
@@ -358,5 +361,9 @@ void simplifyOrderedArray(void *array,
                           bool isEqual (void *, void *));
 
 long long getScalarProduct(int *a, int *b, size_t size);
+
+void setRandom(int *array, size_t count);
+
+void setArrayValue(int *array, size_t count, int value);
 
 #endif // !ONE_DIM_ARRAY

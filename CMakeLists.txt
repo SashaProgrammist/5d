@@ -14,4 +14,5 @@ add_executable(5d
         tasks/task16.c tasks/task17.c tasks/task18.c
         libs/algorithms/oneDimArray/oneDimArray.c libs/algorithms/oneDimArray/oneDimArray.h
         libs/algorithms/heapFunctions/heapFunctions.c libs/algorithms/heapFunctions/heapFunctions.h
-        libs/data_structures/matrix/test/testMatrix.h libs/data_structures/matrix/test/testMatrix.c)
+        libs/data_structures/matrix/test/testMatrix.c libs/data_structures/matrix/test/testMatrix.h
+        libs/algorithms/compares/compares.c libs/algorithms/compares/compares.h)

@@ -16,9 +16,9 @@ void setInputArray(int **array, size_t length) {
     inputArray(*array, length);
 }
 
-void createIntArray(int **array, size_t length) {
+void createIntArray(int **array, size_t count) {
     void *prototype;
-    createArray(&prototype, length, sizeof(int));
+    createArray(&prototype, count, sizeof(int));
     *array = (int *) prototype;
 }
 
@@ -28,12 +28,18 @@ void createLongLongArray(long long **array, size_t length) {
     *array = (long long *) prototype;
 }
 
+void createFloatArray(float **array, size_t length){
+    void *prototype;
+    createArray(&prototype, length, sizeof(float));
+    *array = (float *) prototype;
+}
+
 void createArray(void **array, size_t length, size_t sizeElement) {
     *array = malloc(length * sizeElement);
 }
 
-void printArray(int *array, size_t length) {
-    for (size_t i = 0; i < length; i++)
+void printArray(int *array, size_t count) {
+    for (size_t i = 0; i < count; i++)
         printf("%d ", array[i]);
 
     printf("\n");
@@ -188,15 +194,20 @@ int getAbsoluteMin(int array[], size_t length) {
     for (size_t i = 1; i < length; i++) {
         min = min2(min, mu_abs(array[i]));
     }
+
+    return min;
 }
 
-int *copy(int array[], size_t length) {
-    int *copyArray = (int *) malloc(length * sizeof(int));
+void *copy(void *mem, size_t size) {
+    void *copy = malloc(size);
 
-    for (size_t i = 0; i < length; i++)
-        copyArray[i] = array[i];
+    memcpy(copy, mem, size);
 
-    return copyArray;
+    return copy;
+}
+
+long long *longlong_copy(long long *arr, size_t count){
+    return (long long *) copy(arr, count * sizeof(long long ));
 }
 
 size_t getIndexAbsoluteMin(int array[], size_t length) {
@@ -297,12 +308,18 @@ int binSearchElement(int array[], size_t length, int element) {
     return -1;
 }
 
-bool isUnique(long long int *array, size_t size) {
-    for (size_t i = 0; i < size; i++)
-        for (int j = i + 1; j < size; ++j)
-            if (array[i] == array[j])
-                return false;
+bool isUnique(long long int *array, size_t count) {
+    long long *workingMem = longlong_copy(array, count);
+    long_long_sort(workingMem, count);
+//    qsort(workingMem, );
 
+    for (size_t i = 1; i < count; i++)
+        if (workingMem[i - 1] == workingMem[i]){
+            free((void  *)workingMem);
+            return false;
+        }
+
+    free((void  *)workingMem);
     return true;
 }
 
@@ -532,4 +549,18 @@ long long getScalarProduct(int *a, int *b, size_t size) {
         result += (long long) a[i] * b[i];
 
     return result;
+}
+
+void long_long_sort(long long int *array, size_t count) {
+    qsort(array, count, sizeof(long long ), long_long_compare);
+}
+
+void setRandom(int *array, size_t count) {
+    for (int i = 0; i < count; ++i)
+        array[i] = rand();
+}
+
+void setArrayValue(int *array, size_t count, int value) {
+    for (int i = 0; i < count; ++i)
+        array[i] = value;
 }
